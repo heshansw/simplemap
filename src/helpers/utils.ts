@@ -1,0 +1,107 @@
+import {
+    NestedKeyOptions,
+    ValueTypeInPath,
+    CallbackN,
+    CallbackO,
+    NumberValueKeys,
+    ReturnCallbackO,
+} from './types'
+import { SortOrder } from './enum'
+
+/**
+ * Extract key values from an object and create a new object
+ * @param keys Keys in an object which needs to be extracted
+ * @param obj Original Object
+ * @returns Partial Object with extracted key values
+ */
+export const extract =
+    <T>(keys: Array<keyof T>) =>
+    (obj: T): Partial<T> | undefined =>
+        keys.reduce((ob, key) => ({ ...ob, [key]: obj[key] }), {} as Partial<T>)
+
+/**
+ * Create new key value (number) inside an existing object from new calculation
+ * @param key Key which contains number value
+ * @param callback Callback function which will help to calculate new key value
+ * @param newKey New key name
+ * @param obj Original object
+ * @returns Object or extended object
+ */
+export const changeN =
+    <T>(key: NumberValueKeys<T>, callback: CallbackN, newKey?: string) =>
+    (obj: T): T | (T & Record<NumberValueKeys<T>, number>) | undefined => ({
+        ...obj,
+        [newKey ?? key]: callback(obj[key] as number),
+    })
+
+/**
+ * Add new manipulated key, value to an existing object
+ * @param newKey New key to assign manipulated value
+ * @param callback Callback method which can be used for new key value manipulation
+ * @param obj Original object
+ * @returns Updatted object
+ */
+export const changeO =
+    <T, K extends string>(newKey: K, callback: CallbackO<T>) =>
+    (obj: T): T & Record<K, ReturnCallbackO<T>> =>
+        ({ ...obj, [newKey]: callback(obj) }) as T &
+            Record<K, ReturnCallbackO<T>>
+
+/**
+ * Extract specific keys and create new object array
+ * @param arr Original Object Array
+ * @param keys Keys which needs to be extracted
+ * @returns New key extracted object array
+ */
+export const extractA = <T>(
+    arr: Array<T>,
+    keys: Array<keyof T>
+): Array<Partial<T>> => arr.map(extract(keys))
+
+/**
+ * Change and add new key value to existing array object
+ * @param arr Original Object Array
+ * @param newKey New Key
+ * @param callback Callback method which can be used for new key value manipulation
+ * @returns Altered Object Array
+ */
+export const changeA = <T, K extends string>(
+    arr: Array<T>,
+    newKey: K,
+    callback: CallbackO<T>
+): Array<T & Record<K, ReturnCallbackO<T>>> =>
+    arr.map(changeO(newKey, callback))
+
+/**
+ * Sort Arrayt
+ * @param arr Original Object Array
+ * @param key Sortable Key
+ * @param order Optional, Sorting Order
+ * @returns Sorted array
+ */
+export const sort = <T>(
+    arr: Array<T>,
+    key: keyof T,
+    order: SortOrder = SortOrder.ASC
+) =>
+    arr.sort((a, b) =>
+        (order === SortOrder.ASC ? a?.[key] > b?.[key] : a?.[key] < b?.[key])
+            ? 1
+            : -1
+    )
+
+const getKeyValue = <T, P>(currentObject: T, currentKey: P): T =>
+    (currentObject !== undefined && currentObject?.[currentKey as keyof T]
+        ? currentObject?.[currentKey as keyof T]
+        : undefined) as T
+
+/**
+ * Get Nested Object key value
+ * @param obj Original Object
+ * @param path nested key path to value
+ * @returns nested path key's value type
+ */
+export const get = <T, P extends NestedKeyOptions<T> & string>(
+    obj: T,
+    path: P
+) => path.split('.')?.reduce(getKeyValue, obj) as ValueTypeInPath<T, P>
