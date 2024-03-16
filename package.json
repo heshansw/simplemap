@@ -38,5 +38,8 @@
     "devDependencies": {
         "@swc/core": "^1.4.8",
         "tsup": "^8.0.2"
+    },
+    "publishConfig": {
+        "@heshansw:registry": "https://npm.pkg.github.com"
     }
 }
