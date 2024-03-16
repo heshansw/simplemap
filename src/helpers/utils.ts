@@ -5,6 +5,7 @@ import {
     CallbackO,
     NumberValueKeys,
     ReturnCallbackO,
+    NestedKeyTypes,
 } from './types'
 import { SortOrder } from './enum'
 
@@ -16,8 +17,15 @@ import { SortOrder } from './enum'
  */
 export const extract =
     <T>(keys: Array<keyof T>) =>
-    (obj: T): Partial<T> | undefined =>
-        keys.reduce((ob, key) => ({ ...ob, [key]: obj[key] }), {} as Partial<T>)
+    (obj: T): Partial<T> =>
+        Object.fromEntries(
+            Object.entries(
+                keys.reduce(
+                    (ob, key) => ({ ...ob, [key]: obj[key] }),
+                    {} as Partial<T>
+                )
+            ).filter(([_, value]) => value !== undefined)
+        ) as Partial<T>
 
 /**
  * Create new key value (number) inside an existing object from new calculation
@@ -85,9 +93,7 @@ export const sort = <T>(
     order: SortOrder = SortOrder.ASC
 ) =>
     arr.sort((a, b) =>
-        (order === SortOrder.ASC ? a?.[key] > b?.[key] : a?.[key] < b?.[key])
-            ? 1
-            : -1
+        (order === SortOrder.ASC ? a[key] > b[key] : a[key] < b[key]) ? 1 : -1
     )
 
 const getKeyValue = <T, P>(currentObject: T, currentKey: P): T =>
@@ -105,3 +111,25 @@ export const get = <T, P extends NestedKeyOptions<T> & string>(
     obj: T,
     path: P
 ) => path.split('.')?.reduce(getKeyValue, obj) as ValueTypeInPath<T, P>
+
+/**
+ * Get Nested Key Value by giving Object and key
+ * @param ob Original Object
+ * @param key key which needs to be retrieved
+ * @returns found value or undefined
+ */
+export const getKeyVal = <
+    T,
+    K extends (keyof T | keyof NestedKeyTypes<T>) | string,
+>(
+    ob: T,
+    key: K
+): string | number | symbol | object | undefined =>
+    ob && typeof ob === 'object' && key in ob
+        ? (ob as any)[key]
+        : typeof ob === 'object'
+          ? Object.values(ob as any).reduce(
+                (acc, val) => acc || getKeyVal(val, key as string),
+                undefined
+            )
+          : undefined

@@ -32,3 +32,15 @@ export type ValueTypeInPath<T, P extends string> = P extends keyof T
           ? ValueTypeInPath<T[Key], Rest>
           : never
       : never
+
+export type NestedObject<T, K extends keyof T> = {
+    [key in K]: string | number | symbol
+}
+
+export type NestedKeyTypes<T> = {
+    [K in keyof T & (string | number)]: T[K] extends any[]
+        ? K
+        : T[K] extends object
+          ? K | NestedKeyTypes<T[K]>
+          : K
+}[keyof T & (string | number)]

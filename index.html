@@ -1,12 +1,110 @@
-<!DOCTYPE html>
-<html>
+<!doctype html>
+<html lang="en">
     <head>
-        <meta charset="utf-8" />
-        <title>Webpack App</title>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>
+            SimpleMap Typescript Utility Module (simplemap-ts-utility)
+        </title>
+        <style>
+            body {
+                font-family: Arial, sans-serif;
+                line-height: 1.6;
+                margin: 0;
+                padding: 20px;
+            }
+            h1 {
+                color: #333;
+            }
+            h2 {
+                color: #555;
+            }
+            ul {
+                list-style-type: none;
+                padding: 0;
+            }
+            li {
+                margin-bottom: 10px;
+            }
+            pre {
+                background-color: #f4f4f4;
+                padding: 10px;
+                border-radius: 5px;
+                overflow-x: auto;
+            }
+            code {
+                font-family: 'Courier New', Courier, monospace;
+                font-size: 1em;
+            }
+            .badge {
+                display: inline-block;
+                padding: 5px 10px;
+                background-color: #4caf50;
+                color: white;
+                border-radius: 3px;
+                font-size: 0.8em;
+            }
+            .author {
+                margin-top: 20px;
+            }
+            .author a {
+                color: #007bff;
+                text-decoration: none;
+            }
+        </style>
     </head>
     <body>
-        <h1>Hello world!</h1>
-        <h2>Tip: Check your console</h2>
+        <h1>SimpleMap Typescript Utility Module (simplemap-ts-utility)</h1>
+
+        <p><span class="badge">MIT License</span></p>
+
+        <h2>Introduction</h2>
+
+        <p>
+            <strong>simplemap-ts-utility</strong> is a typescript based library.
+            By using this library, you can import utility methods which can be
+            used to manipulate typeScript <strong>objects</strong>,
+            <strong>arrays</strong>, etc.
+        </p>
+
+        <h2>Available utility methods</h2>
+
+        <ul>
+            <li>
+                <strong>extract</strong> - Can be used to extract key: values
+                from an existing object and create a new object.
+                <ul>
+                    <li><strong>Parameters</strong></li>
+                    <li>
+                        <code>keys</code> Array of keys which needs to be
+                        extracted.
+                    </li>
+                    <li>
+                        <code>object</code> Original Object which will be used
+                        to extract keys.
+                    </li>
+                </ul>
+                <p>Assume we have this type:</p>
+                <pre><code>type Person = {
+    name: string
+    age: number
+    country: string
+}
+
+const personOne: Person = {
+    name: 'Test Name',
+    age: 15,
+    country: 'Sweden',
+}
+
+let personNameAge: Partial&lt;Person&gt; = extract(['name', 'age'])(personOne);
+</code></pre>
+            </li>
+        </ul>
+
+        <div class="author">
+            <h2>🚀 Author</h2>
+            <p><a href="https://github.com/heshansw">@heshansw</a></p>
+        </div>
     </body>
-    
 </html>
