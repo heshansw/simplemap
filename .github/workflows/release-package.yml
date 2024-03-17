@@ -1,35 +1,11 @@
 name: 'CI Build & Publish'
 
 on:
-    push:
-        branches:
-            - main
+    release:
+        types: [published]
 
 jobs:
-    build:
-        runs-on: ubuntu-latest
-        steps:
-            - name: Checkout repository
-              uses: actions/checkout@v4
-
-            - name: Setup .npmrc
-              run: echo "//npm.pkg.github.com/:_authToken=${NODE_AUTH_TOKEN}" > ~/.npmrc
-
-            - name: Setup Node.js
-              uses: actions/setup-node@v4
-              with:
-                  node-version: 16
-                  cache: 'npm'
-                  registry-url: 'https://registry.npmjs.org'
-
-            - name: Install dependencies
-              run: npm ci
-
-            - name: Build TypeScript project with Webpack
-              run: npm run build
-
     publish-npm:
-        needs: build
         runs-on: ubuntu-latest
         permissions:
             packages: write
