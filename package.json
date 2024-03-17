@@ -1,5 +1,5 @@
 {
-    "version": "1.0.4",
+    "version": "1.0.5",
     "description": "SimpleMap Typescript Utility Module",
     "name": "simplemap-ts-utility",
     "author": "Heshan Kithuldora",
@@ -9,7 +9,14 @@
     "files": [
         "dist"
     ],
-    "dependencies": {
+    "scripts": {
+        "build": "tsup",
+        "build:dev": "webpack --mode=development",
+        "build:prod": "webpack --mode=production --node-env=production",
+        "watch": "webpack --watch",
+        "start": "webpack serve"
+    },
+    "devDependencies": {
         "@typescript-eslint/eslint-plugin": "^7.1.1",
         "@typescript-eslint/parser": "^7.1.1",
         "@webpack-cli/generators": "^3.0.7",
@@ -26,16 +33,7 @@
         "typescript": "^5.3.3",
         "webpack": "^5.90.3",
         "webpack-cli": "^5.1.4",
-        "webpack-dev-server": "^5.0.2"
-    },
-    "scripts": {
-        "build": "tsup",
-        "build:dev": "webpack --mode=development",
-        "build:prod": "webpack --mode=production --node-env=production",
-        "watch": "webpack --watch",
-        "start": "webpack serve"
-    },
-    "devDependencies": {
+        "webpack-dev-server": "^5.0.2",
         "@swc/core": "^1.4.8",
         "tsup": "^8.0.2"
     },
