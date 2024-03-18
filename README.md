@@ -7,6 +7,14 @@
 **simplemap-ts-utility** is a typescript based library. By using this library, you can import utility methods which can be used to manipulate
 typeScript **objects**, **arrays**, etc.
 
+Demo is available here: [https://heshansw.github.io/simplemap/](https://heshansw.github.io/simplemap/)
+
+## How to run locally
+
+-   First you need to download the code from github repository: [https://github.com/heshansw/simplemap](https://github.com/heshansw/simplemap)
+-   Then run `npm i` on root folder to install dev dependencies
+-   Finally run `npm start` (which will open webpack serve)
+
 ## Available utility methods
 
 These are the available Typescript object manipulation methods,
@@ -122,11 +130,15 @@ These are the available Typescript object manipulation methods,
         So you need to have a method to calculate age of this Student and assign that age to new key **age**. You can do it like below.
 
         ```
-        const calcAge = ({ dateOfBirth }, today = new Date()): number =>
-            today.getMonth() < dateOfBirth.getMonth() ||
-                (today.getMonth() === dateOfBirth.getMonth() && today.getDate() < dateOfBirth.getDate())
-                ? today.getFullYear() - dateOfBirth.getFullYear() - 1
-                : today.getFullYear() - dateOfBirth.getFullYear();
+        const calcAge = (
+                { dateOfBirth }: Partial<StudentNew>,
+                today = new Date()
+            ): number =>
+                (dateOfBirth && today.getMonth() < dateOfBirth.getMonth()) ||
+                (today.getMonth() === (dateOfBirth as Date).getMonth() &&
+                    today.getDate() < (dateOfBirth as Date).getDate())
+                    ? today.getFullYear() - (dateOfBirth as Date).getFullYear() - 1
+                    : today.getFullYear() - (dateOfBirth as Date).getFullYear();
 
         const altStudentOne = changeO('age', calcAge)(studentOne);
         ```
@@ -298,26 +310,26 @@ These are the available Typescript object manipulation methods,
         So now you need to get the city name. you can use the **get** method as mentioned below.
 
         ```
-        const personCity = get(person, 'person.location.city')
+        const personCity = get(person, 'location.city')
         ```
 
         So then you can have city value as `Copanhagen`
 
-    -   **getKeyVal** This method is kind of similar to **get** method. But here, by using this method, You can directly get value in an object by using key. Will use the same example as above Let say you need to get the _zipCode_ value for above person using this method. You can use it as below.
+-   **getKeyVal** This method is kind of similar to **get** method. But here, by using this method, You can directly get value in an object by using key. Will use the same example as above Let say you need to get the _zipCode_ value for above person using this method. You can use it as below.
 
--   **_Parameters_**
+    -   **_Parameters_**
 
-    1. **obj** Original Object
-    2. **key** key which needs to be retrieved
+        1. **obj** Original Object
+        2. **key** key which needs to be retrieved
 
-    ```
-    const personZipCode = getKeyVal(person, 'zipCode')
-    ```
+        ```
+        const personZipCode = getKeyVal(person, 'zipCode')
+        ```
 
-    So then, you can directly get the value of zipcode which is `1050`
-    But, let's say you have duplicated key names inside nested object. Then, this method will only retieve the first finding value.
+        So then, you can directly get the value of zipcode which is `1050`
+        But, let's say you have duplicated key names inside nested object. Then, this method will only retieve the first finding value.
 
-    **Note:** _this method will be improved with the next version_
+        **Note:** _this method will be improved with the next version_
 
 ## 🚀 Author
 

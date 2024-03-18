@@ -51,6 +51,16 @@
                 color: #007bff;
                 text-decoration: none;
             }
+            .container-output {
+                margin-top: 20px;
+                padding: 10px;
+                border: 1px solid #ccc;
+                border-radius: 5px;
+                background-color: #f9f9f9;
+            }
+            .container-output pre {
+                text-align: left;
+            }
         </style>
     </head>
     <body>
@@ -86,19 +96,314 @@
                 </ul>
                 <p>Assume we have this type:</p>
                 <pre><code>type Person = {
-    name: string
-    age: number
-    country: string
+name: string
+age: number
+country: string
 }
 
 const personOne: Person = {
-    name: 'Test Name',
-    age: 15,
-    country: 'Sweden',
+name: 'Test Name',
+age: 15,
+country: 'Sweden',
 }
 
 let personNameAge: Partial&lt;Person&gt; = extract(['name', 'age'])(personOne);
 </code></pre>
+                <div class="container-output">
+                    <button id="onExtractId">Show extract Method Output</button>
+                    <div id="viewExtractId"></div>
+                </div>
+            </li>
+            <li>
+                <strong>changeN</strong> - This method can be used with this
+                scenario. There is an object with numberical key value. And
+                Object needs to be changed and add new key or replace existing
+                key. This changed value should be calculated by using existing
+                numerical key value.
+                <ul>
+                    <li><strong>First Parameters</strong></li>
+                    <li>
+                        <code>keys</code> Original key which may needs to use as
+                        original key value to calculate new key value.
+                    </li>
+                    <li>
+                        <code>callback</code> Callback method which will be use
+                        to declare new value calculation code.
+                    </li>
+                    <li>
+                        <code>newKey</code> Optional new key to store calculated
+                        value.
+                    </li>
+                </ul>
+                <ul>
+                    <li><strong>Second Parameters</strong></li>
+                    <li><code>obj</code> Original Object.</li>
+                </ul>
+                <p>Assume we have this type:</p>
+                <pre><code>type Student = {
+name: string,
+age: number
+}
+</code></pre>
+                <p>and you have this Student</p>
+                <pre><code>const studentOne: Student = {
+name: 'Student Name 1',
+age: 18
+}
+</code></pre>
+                <p>
+                    Let say, you need to manipulate this object and add new key
+                    value as ageAfterTenYears, then you can use this changeN
+                    method like below.
+                </p>
+                <pre><code>
+const calcAgeTenYears = (age: number) => age + 10;
+const changedStudent = changeN('age', calcAgeTenYears, 'ageAfterTenYears')(studentOne);
+</code></pre>
+                <div class="container-output">
+                    <button id="onChangeNId">Show changeN Method Output</button>
+                    <div id="viewChangeNId"></div>
+                </div>
+            </li>
+            <li>
+                <strong>changeO</strong> - This method is bit similar to
+                <b>changeN</b>. With this method, you can manipulate existing
+                object and add a new key value pair with calculation.
+                <ul>
+                    <li><strong>First Parameters</strong></li>
+                    <li>
+                        <code>newKey</code> key that will be added with
+                        calculated value.
+                    </li>
+                    <li>
+                        <code>callback</code> callback method which can be used
+                        to calculation implementation.
+                    </li>
+                </ul>
+                <ul>
+                    <li><strong>Second Parameter</strong></li>
+                    <li>
+                        <code>obj</code> original object which needs to be
+                        manipulate.
+                    </li>
+                </ul>
+                <p>Lets say you have this object type:</p>
+                <pre><code>type Student = {
+name: string,
+age: number
+}
+</code></pre>
+                <p>and you have this Student</p>
+                <pre><code>type Student = {
+    name: string,
+    dateOfBirth: Date
+}
+</code></pre>
+                <p>and you have this Student</p>
+                <pre><code>
+const studentOne: Student = {
+    name: 'Student Name 1',
+    dateOfBirth: new Date('1990-01-01')
+}
+</code></pre>
+                <p>
+                    So you need to have a method to calculate age of this
+                    Student and assign that age to new key age. You can do it
+                    like below.
+                </p>
+                <pre><code>
+const calcAge = ({ dateOfBirth }, today = new Date()): number =>
+    today.getMonth() < dateOfBirth.getMonth() ||
+        (today.getMonth() === dateOfBirth.getMonth() && today.getDate() < dateOfBirth.getDate())
+            ? today.getFullYear() - dateOfBirth.getFullYear() - 1
+                : today.getFullYear() - dateOfBirth.getFullYear();
+                
+const altStudentOne = changeO('age', calcAge)(studentOne);
+    </code></pre>
+                <div class="container-output">
+                    <button id="onChangeOId">Show changeO Method Output</button>
+                    <div id="viewChangeOId"></div>
+                </div>
+            </li>
+            <li>
+                <strong>extractA</strong> - This is the method can be used with
+                object array to extract several keys inside object array and
+                create a new object array. This uses extract method from above
+                mentioned <b>extract</b>.
+                <ul>
+                    <li><strong>Parameters</strong></li>
+                    <li><code>array</code> Original object array.</li>
+                    <li><code>keys</code> keys which needs to be extracted.</li>
+                </ul>
+                <p>Lets say you have below Object type:</p>
+                <pre><code>type Student {
+    name: string,
+    address: string,
+    age: number
+}
+</code></pre>
+                <p>
+                    and you have an Student object array which is coming from an
+                    API like below
+                </p>
+                <pre><code>const studentArray: Array<Student> = [
+    { name: 'Student Name 1', age: 18, address: 'Malmö' },
+    { name: 'Student Name 2', age: 17, address: 'Lund' },
+    { name: 'Student Name 3', age: 16, address: 'Stockholm' },
+    { name: 'Student Name 4', age: 18, address: 'Lund' }
+]
+</code></pre>
+                <p>and now you need to have an object array which only contains name and age. Then you can use extractA method like below.</p>
+                <pre><code>
+const stdArrayNameAge: Array<Partial<Student>> = extractA(studentArray, ['name', 'age']);
+</code></pre>
+                <p>
+                    Then you can have new Array with information like below.
+                </p>
+                <pre><code>
+[
+    { name: 'Student Name 1', age: 18 },
+    { name: 'Student Name 2', age: 17 },
+    { name: 'Student Name 3', age: 16 },
+    { name: 'Student Name 4', age: 18 }
+]
+    </code></pre>
+                <div class="container-output">
+                    <button id="onExtractAId">Show extractA Method Output</button>
+                    <div id="viewExtractAId"></div>
+                </div>
+            </li>
+            <li>
+                <strong>changeA</strong> - This method is similar to <b>changeO</b> but this method can be used with Object Arrays. As same as earlier method, you can add new key value with calculation to an Object Array.
+                <ul>
+                    <li><strong>Parameters</strong></li>
+                    <li><code>array</code> Original object array.</li>
+                    <li><code>newKey</code> new key which will use to have calculated value.</li>
+                    <li><code>callback</code> callback method, which will be used for new value calculation.</li>
+                </ul>
+                <p>We can use the same scenario as <b>changeO</b>. Lets say you have below mentioned type:</p>
+                <pre><code>type Student {
+    name: string,
+    dateOfBirth: Date
+}
+</code></pre>
+                <p>
+                    and then you have below mentioned object array which is coming from an API.
+                </p>
+                <pre><code>const studentArray: Array<Student> = [
+    { name: 'Student Name 1', dateOfBirth: new Date('1990-01-02') },
+    { name: 'Student Name 2', dateOfBirth: new Date('1995-04-04') },
+    { name: 'Student Name 3', dateOfBirth: new Date('1991-11-14') },
+    { name: 'Student Name 4', dateOfBirth: new Date('1989-09-11') }
+]
+</code></pre>
+                <p>So you need to append age calculation to this object array and you have same age calculation method as above. So you can use <b>changeA</b> method with this object array like below</p>
+                <pre><code>
+const stWithAgeArray = changeA(studentArray, 'age', calcAge);
+</code></pre>
+                <p>
+                    So new object array will looks like below.
+                </p>
+                <pre><code>
+[
+    { name: 'Student Name 1', dateOfBirth: new Date('1990-01-02'), age: 34 },
+    { name: 'Student Name 2', dateOfBirth: new Date('1995-04-04'), age: 29 },
+    { name: 'Student Name 3', dateOfBirth: new Date('1991-11-14'), age: 32 },
+    { name: 'Student Name 4', dateOfBirth: new Date('1989-09-11'), age: 34 }
+]
+    </code></pre>
+                <div class="container-output">
+                    <button id="onChangeAId">Show changeA Method Output</button>
+                    <div id="viewChangeAId"></div>
+                </div>
+            </li>
+            <li>
+                <strong>sort</strong> - This method can be used to sort an Array object based on key inside the object array using desc or asc way.
+                <ul>
+                    <li><strong>Parameters</strong></li>
+                    <li><code>array</code> Original object array.</li>
+                    <li><code>key</code> the key which used to sort the array.</li>
+                    <li><code>order</code> Sorting Order, You can use constant coming with library for ASC: <code>SortOrder.ASC</code>, DESC: <code>SortOrder.DESC</code>. This is an optional parameter. in default order will be arrange in ASC order.</li>
+                </ul>
+                <p>So lets say you have above used stWithAgeArray Array. and you need to sort object array by age in descending order. You can use sort method like below.</p>
+                <pre><code>const descAgeStudents = sort(stWithAgeArray, 'age', SortOrder.DESC);
+</code></pre>
+                <p>
+                    and then you have below mentioned object array which is coming from an API.
+                </p>
+                <p>So the order will be arranged age descending order like below.</p>
+                <pre><code>[
+    { name: 'Student Name 1', dateOfBirth: new Date('1990-01-02'), age: 34 },
+    { name: 'Student Name 4', dateOfBirth: new Date('1989-09-11'), age: 34 },
+    { name: 'Student Name 3', dateOfBirth: new Date('1991-11-14'), age: 32 },
+    { name: 'Student Name 2', dateOfBirth: new Date('1995-04-04'), age: 29 }
+]
+</code></pre>
+                <div class="container-output">
+                    <button id="onSortId">Show sort Method Output</button>
+                    <div id="viewSortId"></div>
+                </div>
+            </li>
+            <li>
+                <strong>get</strong> - This method can be used to get value from an object by providing the key path.
+                <ul>
+                    <li><strong>Parameters</strong></li>
+                    <li><code>obj</code> Original Object.</li>
+                    <li><code>keyPath</code> Key path which will be used to retrieve value. when you call this method, your IDE will suggest available keypaths</li>
+                </ul>
+                <p>So lets say you have below mentioned type of Object</p>
+                <pre><code>type Person = {
+    name: string,
+    age: number,
+    location: {
+        city: {
+            name: string,
+            zipCode: string
+        },
+        country: string
+    }
+}
+</code></pre>
+                <p>
+                    And then lets say you need to retrieve city name of a person from below mentioned person information
+                </p>
+                <pre><code>const person: Person = {
+    name: 'Test Person 1',
+    age: 30,
+    location: {
+        city: {
+            name: 'Copanhagen',
+            zipCode: '1050'
+        },
+        country: 'Denmark'
+    }
+}
+</code></pre>
+<p>So now you need to get the city name. you can use the get method as mentioned below.</p>
+<pre><code>const personCity = get(person, 'location.city')</code></pre>
+<p>So then you can have city value as <code>Copanhagen</code></p>
+                <div class="container-output">
+                    <button id="onGetId">Show get Method Output</button>
+                    <div id="viewGetId"></div>
+                </div>
+            </li>
+            <li>
+                <strong>getKeyVal</strong> - This method is kind of similar to get method. But here, by using this method, You can directly get value in an object by using key. Will use the same example as above Let say you need to get the zipCode value for above person using this method. You can use it as below.
+                <ul>
+                    <li><strong>Parameters</strong></li>
+                    <li><code>obj</code> Original Object.</li>
+                    <li><code>key</code> key which needs to be retrieved</li>
+                </ul>
+                <p>
+                    And then lets say you need to retrieve city name of a person from below mentioned person information
+                </p>
+                <pre><code>const personZipCode = getKeyVal(person, 'zipCode')
+</code></pre>
+<p>So then, you can directly get the value of zipcode which is <code>1050</code> But, let's say you have duplicated key names inside nested object. Then, this method will only retieve the first finding value.</p>
+                <div class="container-output">
+                    <button id="onGetKeyId">Show getKeyVal Method Output</button>
+                    <div id="viewGetKeyId"></div>
+                </div>
             </li>
         </ul>
 
@@ -106,5 +411,6 @@ let personNameAge: Partial&lt;Person&gt; = extract(['name', 'age'])(personOne);
             <h2>🚀 Author</h2>
             <p><a href="https://github.com/heshansw">@heshansw</a></p>
         </div>
+        <script type="text/javascript" src="main.js"></script>
     </body>
 </html>

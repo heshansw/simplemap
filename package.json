@@ -1,5 +1,5 @@
 {
-    "version": "1.0.5",
+    "version": "1.0.6",
     "description": "SimpleMap Typescript Utility Module",
     "name": "simplemap-ts-utility",
     "author": "Heshan Kithuldora",
@@ -12,7 +12,7 @@
     "scripts": {
         "build": "tsup",
         "build:dev": "webpack --mode=development",
-        "build:prod": "webpack --mode=production --node-env=production",
+        "deploy": "webpack --mode=development",
         "watch": "webpack --watch",
         "start": "webpack serve"
     },
