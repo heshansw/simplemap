@@ -2,12 +2,23 @@
 
 [![MIT License](https://img.shields.io/badge/License-MIT-green.svg)](https://choosealicense.com/licenses/mit/)
 
+[![Version](https://img.shields.io/badge/Version-1.0.6-blue)](https://www.npmjs.com/package/simplemap-ts-utility)
+
 ## Introduction
 
 **simplemap-ts-utility** is a typescript based library. By using this library, you can import utility methods which can be used to manipulate
 typeScript **objects**, **arrays**, etc.
 
-Demo is available here: [https://heshansw.github.io/simplemap/](https://heshansw.github.io/simplemap/)
+## Installation
+
+Install my-project with npm
+
+```bash
+  npm i simplemap-ts-utility
+```
+
+-   npm package: [https://www.npmjs.com/package/simplemap-ts-utility](https://www.npmjs.com/package/simplemap-ts-utility)
+-   Demo: [https://heshansw.github.io/simplemap/](https://heshansw.github.io/simplemap/)
 
 ## How to run locally
 
@@ -28,7 +39,7 @@ These are the available Typescript object manipulation methods,
 
         Assume we have this type
 
-        ```
+        ```typescript
         type Person = {
             name: string
             age: number
@@ -38,7 +49,7 @@ These are the available Typescript object manipulation methods,
 
         And we have this object
 
-        ```
+        ```typescript
         const personOne: Person = {
             name: 'Test Name',
             age: 15,
@@ -48,7 +59,7 @@ These are the available Typescript object manipulation methods,
 
         Lets assume we need to extract name and age, and then create a new Object. Then we can use **extract** method.
 
-        ```
+        ```typescript
         let personNameAge: Partial<Person> = extract(['name', 'age'])(personOne)
         ```
 
@@ -67,7 +78,7 @@ These are the available Typescript object manipulation methods,
 
         Assume that you have this object type
 
-        ```
+        ```typescript
         type Student {
             name: string,
             age: number
@@ -76,23 +87,27 @@ These are the available Typescript object manipulation methods,
 
         and you have this Student
 
-        ```
+        ```typescript
         const studentOne: Student = {
             name: 'Student Name 1',
-            age: 18
+            age: 18,
         }
         ```
 
         Let say, you need to manipulate this object and add new key value as _ageAfterTenYears_, then you can use this **changeN** method like below.
 
-        ```
-        const calcAgeTenYears = (age: number) => age + 10;
-        const changedStudent = changeN('age', calcAgeTenYears, 'ageAfterTenYears')(studentOne);
+        ```typescript
+        const calcAgeTenYears = (age: number) => age + 10
+        const changedStudent = changeN(
+            'age',
+            calcAgeTenYears,
+            'ageAfterTenYears'
+        )(studentOne)
         ```
 
         so then new _changedStudent_ object will looks like below.
 
-        ```
+        ```typescript
         {
             name: 'Student Name 1',
             age: 18,
@@ -111,7 +126,7 @@ These are the available Typescript object manipulation methods,
 
         Lets say you have this object type
 
-        ```
+        ```typescript
         type Student {
             name: string,
             dateOfBirth: Date
@@ -120,32 +135,32 @@ These are the available Typescript object manipulation methods,
 
         and you have this Student
 
-        ```
+        ```typescript
         const studentOne: Student = {
             name: 'Student Name 1',
-            dateOfBirth: new Date('1990-01-01')
+            dateOfBirth: new Date('1990-01-01'),
         }
         ```
 
         So you need to have a method to calculate age of this Student and assign that age to new key **age**. You can do it like below.
 
-        ```
+        ```typescript
         const calcAge = (
-                { dateOfBirth }: Partial<StudentNew>,
-                today = new Date()
-            ): number =>
-                (dateOfBirth && today.getMonth() < dateOfBirth.getMonth()) ||
-                (today.getMonth() === (dateOfBirth as Date).getMonth() &&
-                    today.getDate() < (dateOfBirth as Date).getDate())
-                    ? today.getFullYear() - (dateOfBirth as Date).getFullYear() - 1
-                    : today.getFullYear() - (dateOfBirth as Date).getFullYear();
+            { dateOfBirth }: Partial<StudentNew>,
+            today = new Date()
+        ): number =>
+            (dateOfBirth && today.getMonth() < dateOfBirth.getMonth()) ||
+            (today.getMonth() === (dateOfBirth as Date).getMonth() &&
+                today.getDate() < (dateOfBirth as Date).getDate())
+                ? today.getFullYear() - (dateOfBirth as Date).getFullYear() - 1
+                : today.getFullYear() - (dateOfBirth as Date).getFullYear()
 
-        const altStudentOne = changeO('age', calcAge)(studentOne);
+        const altStudentOne = changeO('age', calcAge)(studentOne)
         ```
 
         Then new **altStudentOne** object will looks like below
 
-        ```
+        ```typescript
         {
             name: 'Student Name 1',
             dateOfBirth: new Date('1990-01-01'),
@@ -162,7 +177,7 @@ These are the available Typescript object manipulation methods,
 
         Lets say you have below Object type
 
-        ```
+        ```typescript
         type Student {
             name: string,
             address: string,
@@ -172,29 +187,32 @@ These are the available Typescript object manipulation methods,
 
         and you have an Student object array which is coming from an API like below
 
-        ```
+        ```typescript
         const studentArray: Array<Student> = [
             { name: 'Student Name 1', age: 18, address: 'Malmö' },
             { name: 'Student Name 2', age: 17, address: 'Lund' },
             { name: 'Student Name 3', age: 16, address: 'Stockholm' },
-            { name: 'Student Name 4', age: 18, address: 'Lund' }
+            { name: 'Student Name 4', age: 18, address: 'Lund' },
         ]
         ```
 
         and now you need to have an object array which only contains _name_ and _age_. Then you can use **extractA** method like below.
 
-        ```
-        const stdArrayNameAge: Array<Partial<Student>> = extractA(studentArray, ['name', 'age']);
+        ```typescript
+        const stdArrayNameAge: Array<Partial<Student>> = extractA(
+            studentArray,
+            ['name', 'age']
+        )
         ```
 
         Then you can have new Array with information like below.
 
-        ```
+        ```json
         [
-            { name: 'Student Name 1', age: 18 },
-            { name: 'Student Name 2', age: 17 },
-            { name: 'Student Name 3', age: 16 },
-            { name: 'Student Name 4', age: 18 }
+            { "name": "Student Name 1", "age": 18 },
+            { "name": "Student Name 2", "age": 17 },
+            { "name": "Student Name 3", "age": 16 },
+            { "name": "Student Name 4", "age": 18 }
         ]
         ```
 
@@ -208,7 +226,7 @@ These are the available Typescript object manipulation methods,
 
         We can use the same scenario as **changeO**. Lets say you have below mentioned type
 
-        ```
+        ```typescript
         type Student {
             name: string,
             dateOfBirth: Date
@@ -217,24 +235,24 @@ These are the available Typescript object manipulation methods,
 
         and then you have below mentioned object array which is coming from an API.
 
-        ```
+        ```typescript
         const studentArray: Array<Student> = [
             { name: 'Student Name 1', dateOfBirth: new Date('1990-01-02') },
             { name: 'Student Name 2', dateOfBirth: new Date('1995-04-04') },
             { name: 'Student Name 3', dateOfBirth: new Date('1991-11-14') },
-            { name: 'Student Name 4', dateOfBirth: new Date('1989-09-11') }
+            { name: 'Student Name 4', dateOfBirth: new Date('1989-09-11') },
         ]
         ```
 
         So you need to append age calculation to this object array and you have same age calculation method as above. So you can use **changeA** method with this object array like below
 
-        ```
-        const stWithAgeArray = changeA(studentArray, 'age', calcAge);
+        ```typescript
+        const stWithAgeArray = changeA(studentArray, 'age', calcAge)
         ```
 
         So new object array will looks like below.
 
-        ```
+        ```json
         [
             { name: 'Student Name 1', dateOfBirth: new Date('1990-01-02'), age: 34 },
             { name: 'Student Name 2', dateOfBirth: new Date('1995-04-04'), age: 29 },
@@ -253,18 +271,34 @@ These are the available Typescript object manipulation methods,
 
         So lets say you have above used **stWithAgeArray** Array. and you need to sort object array by age in descending order. You can use **sort** method like below.
 
-        ```
-        const descAgeStudents = sort(stWithAgeArray, 'age', SortOrder.DESC);
+        ```typescript
+        const descAgeStudents = sort(stWithAgeArray, 'age', SortOrder.DESC)
         ```
 
         So the order will be arranged age descending order like below.
 
-        ```
-        [
-            { name: 'Student Name 1', dateOfBirth: new Date('1990-01-02'), age: 34 },
-            { name: 'Student Name 4', dateOfBirth: new Date('1989-09-11'), age: 34 },
-            { name: 'Student Name 3', dateOfBirth: new Date('1991-11-14'), age: 32 },
-            { name: 'Student Name 2', dateOfBirth: new Date('1995-04-04'), age: 29 }
+        ```typescript
+        ;[
+            {
+                name: 'Student Name 1',
+                dateOfBirth: new Date('1990-01-02'),
+                age: 34,
+            },
+            {
+                name: 'Student Name 4',
+                dateOfBirth: new Date('1989-09-11'),
+                age: 34,
+            },
+            {
+                name: 'Student Name 3',
+                dateOfBirth: new Date('1991-11-14'),
+                age: 32,
+            },
+            {
+                name: 'Student Name 2',
+                dateOfBirth: new Date('1995-04-04'),
+                age: 29,
+            },
         ]
         ```
 
@@ -277,15 +311,15 @@ These are the available Typescript object manipulation methods,
 
         So lets say you have below mentioned type of Object
 
-        ```
+        ```typescript
         type Person = {
-            name: string,
-            age: number,
+            name: string
+            age: number
             location: {
                 city: {
-                    name: string,
+                    name: string
                     zipCode: string
-                },
+                }
                 country: string
             }
         }
@@ -293,23 +327,23 @@ These are the available Typescript object manipulation methods,
 
         And then lets say you need to retrieve city name of a person from below mentioned person information
 
-        ```
+        ```typescript
         const person: Person = {
             name: 'Test Person 1',
             age: 30,
             location: {
                 city: {
                     name: 'Copanhagen',
-                    zipCode: '1050'
+                    zipCode: '1050',
                 },
-                country: 'Denmark'
-            }
+                country: 'Denmark',
+            },
         }
         ```
 
         So now you need to get the city name. you can use the **get** method as mentioned below.
 
-        ```
+        ```typescript
         const personCity = get(person, 'location.city')
         ```
 
@@ -322,7 +356,7 @@ These are the available Typescript object manipulation methods,
         1. **obj** Original Object
         2. **key** key which needs to be retrieved
 
-        ```
+        ```typescript
         const personZipCode = getKeyVal(person, 'zipCode')
         ```
 
