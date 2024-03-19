@@ -8,7 +8,14 @@ import {
     getKeyVal,
     sort,
 } from '../src/helpers/utils'
+import {
+    getEmail,
+    validateEmailObject,
+    autoValidateEmail,
+    validateEmail,
+} from '../src/helpers/validators/email'
 import { SortOrder } from '../src/helpers/enum'
+import { EmailBasic } from '../src/helpers/types'
 
 type Person = {
     name: string
@@ -209,4 +216,115 @@ const onGetKey = () => onView(viewGetKey, personZipCode as string)
 
 if (btnOnGetKey) {
     btnOnGetKey.addEventListener('click', onGetKey)
+}
+
+/**
+ * 8) validateEmail method
+ */
+
+const btnOnValidateEmail = document.getElementById('onEmailId')
+const viewValidateEmail = document.getElementById('viewEmailId')
+const valueValidateEmail = document.getElementById(
+    'valEmailId'
+) as HTMLInputElement
+
+const onSingleEmailValidate = () => {
+    try {
+        return validateEmail(valueValidateEmail?.value as EmailBasic)
+    } catch (ex) {
+        return ex
+    }
+}
+
+const onValidateEmail = () => onView(viewValidateEmail, onSingleEmailValidate())
+
+if (btnOnValidateEmail) {
+    btnOnValidateEmail.addEventListener('click', onValidateEmail)
+}
+
+/**
+ * 9) getEmail method
+ */
+
+type User = {
+    name: string
+    contact: {
+        email: EmailBasic
+        address: string
+    }
+}
+
+const userData: User = {
+    name: 'heshan',
+    contact: {
+        email: 'test@test.com',
+        address: 'Malmö',
+    },
+}
+
+const btnOnGetEmail = document.getElementById('onGetEmailId')
+const viewGetEmail = document.getElementById('viewGetEmailId')
+
+const onSingleGetEmail = () => {
+    try {
+        return getEmail(userData, 'contact.email')
+    } catch (ex) {
+        return ex
+    }
+}
+
+const onGetEmail = () => onView(viewGetEmail, onSingleGetEmail())
+
+if (btnOnGetEmail) {
+    btnOnGetEmail.addEventListener('click', onGetEmail)
+}
+
+/**
+ * 10) validateEmailObject Email
+ */
+
+const btnOnGetEmailObj = document.getElementById('onGetEmailObjId')
+const viewGetEmailObj = document.getElementById('viewGetEmailObjId')
+
+const onGetEmailObj = () => {
+    try {
+        return validateEmailObject(userData, 'contact.email')
+    } catch (ex) {
+        return ex
+    }
+}
+
+const onObjEmail = () => onView(viewGetEmailObj, onGetEmailObj())
+
+if (btnOnGetEmailObj) {
+    btnOnGetEmailObj.addEventListener('click', onObjEmail)
+}
+
+/**
+ * 11) Auto Validate Email
+ */
+
+const userDataError: User = {
+    name: 'heshan',
+    contact: {
+        email: 'test@#.c',
+        address: 'Malmö',
+    },
+}
+
+const btnOnAutoGetEmail = document.getElementById('onAutoGetEmailId')
+const viewAutoGetEmail = document.getElementById('viewAutoGetEmailId')
+
+const onAutoGetEmail = () => {
+    try {
+        return autoValidateEmail(userDataError)
+    } catch (ex) {
+        return ex
+    }
+}
+
+const onAutoEmail = () => onView(viewAutoGetEmail, onAutoGetEmail())
+
+if (btnOnAutoGetEmail) {
+    btnOnAutoGetEmail.addEventListener('click', onAutoEmail)
 }

@@ -6,6 +6,8 @@ import {
     NumberValueKeys,
     ReturnCallbackO,
     NestedKeyTypes,
+    EmailBasic,
+    Email,
 } from './types'
 import { SortOrder } from './enum'
 
@@ -96,7 +98,7 @@ export const sort = <T>(
         (order === SortOrder.ASC ? a[key] > b[key] : a[key] < b[key]) ? 1 : -1
     )
 
-const getKeyValue = <T, P>(currentObject: T, currentKey: P): T =>
+export const getKeyValue = <T, P>(currentObject: T, currentKey: P): T =>
     (currentObject !== undefined && currentObject?.[currentKey as keyof T]
         ? currentObject?.[currentKey as keyof T]
         : undefined) as T
@@ -133,3 +135,21 @@ export const getKeyVal = <
                 undefined
             )
           : undefined
+
+/**
+ *
+ * @param obj Original Object
+ * @param key key contains string
+ * @returns array of values
+ */
+export const findContainKeys = <T extends Record<string, any>>(
+    obj: T,
+    key: string
+): (string | number | symbol | object | undefined)[] =>
+    Object.keys(obj).flatMap((keyVal) =>
+        typeof obj[keyVal] === 'object' && obj[keyVal] !== null
+            ? findContainKeys(obj[keyVal], key)
+            : typeof keyVal === 'string' && keyVal.toLowerCase().includes(key)
+              ? [obj[keyVal] as any]
+              : []
+    )

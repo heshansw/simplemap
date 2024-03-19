@@ -9,8 +9,15 @@ import {
     getKeyVal,
 } from './helpers/utils'
 
+import {
+    getEmail,
+    validateEmailObject,
+    autoValidateEmail,
+    validateEmail,
+} from './helpers/validators/email'
+
 import { SortOrder } from './helpers/enum'
-import { OnlyTypes } from './helpers/types'
+import { OnlyTypes, EmailBasic } from './helpers/types'
 
 export {
     extract,
@@ -23,4 +30,9 @@ export {
     getKeyVal,
     OnlyTypes,
     SortOrder,
+    getEmail,
+    validateEmail,
+    validateEmailObject,
+    autoValidateEmail,
+    EmailBasic,
 }
