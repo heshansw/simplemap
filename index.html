@@ -406,6 +406,124 @@ const stWithAgeArray = changeA(studentArray, 'age', calcAge);
                 </div>
             </li>
         </ul>
+        <h2>Email Validators</h2>
+        <ul>
+            <li>
+                <strong>validateEmail</strong> - Check given email address is valid.
+                <ul>
+                    <li><strong>Parameters</strong></li>
+                    <li>
+                        <code>email</code> Email Address.
+                    </li>
+                </ul>
+                <p>Assume we have this email:</p>
+                <pre><code>test@test.com
+</code></pre>
+<pre><code>const validateSingleEmail = validateEmail('test@test.com')
+</code></pre>
+                <div class="container-output">
+                    <input id="valEmailId" type="text"/>
+                    <button id="onEmailId">Validate Email</button>
+                    <div id="viewEmailId"></div>
+                </div>
+            </li>
+            <li>
+                <strong>getEmail</strong> - Get email from nested key path (if email address is valid)
+                <ul>
+                    <li><strong>Parameters</strong></li>
+                    <li>
+                        <code>obj</code> Original Object
+                    </li>
+                    <li>
+                        <code>path</code> key path
+                    </li>
+                </ul>
+                <p>Assume we have this is the object:</p>
+                <pre><code>type User = {
+    name: string
+    contact: {
+        email: EmailBasic
+        address: string
+    }
+}
+</code></pre>
+<p><b>EmailBasic</b> is a type coming with this package which you can use</p>
+<pre><code>const userData: User = {
+    name: 'heshan',
+    contact: {
+        email: 'test@test.com',
+        address: 'Malmö',
+    },
+}
+</code></pre>
+<pre><code>try {
+    const emailAddress = getEmail(userData, 'contact.email')
+} catch (ex) {
+    console.log(ex)
+}
+</code></pre>
+                <div class="container-output">
+                    <button id="onGetEmailId">Get Email Address</button>
+                    <div id="viewGetEmailId"></div>
+                </div>
+            </li>
+            <li>
+                <strong>validateEmailObject</strong> - In Same way you can use this method which will return the entire object, if the email address is valid
+                <ul>
+                    <li><strong>Parameters</strong></li>
+                    <li>
+                        <code>obj</code> Original Object
+                    </li>
+                    <li>
+                        <code>path</code> key path
+                    </li>
+                </ul>
+                <pre><code>
+try {
+    return validateEmailObject(userData, 'contact.email')
+} catch (ex) {
+    return ex
+}
+                </code></pre>
+            </li>
+            <li>
+                <strong>autoValidateEmail</strong> - Validate an object if the object contains key which contains word 'email'
+                <ul>
+                    <li><strong>Parameters</strong></li>
+                    <li>
+                        <code>obj</code> Original Object
+                    </li>
+                </ul>
+                <p>We can use the same object as above but this time we will put an invalid email</p>
+                <pre><code>type User = {
+    name: string
+    contact: {
+        email: EmailBasic
+        address: string
+    }
+}
+</code></pre>
+<p><b>EmailBasic</b> is a type coming with this package which you can use</p>
+<pre><code>const userData: User = {
+    name: 'heshan',
+    contact: {
+        email: 'test@test',
+        address: 'Malmö',
+    },
+}
+</code></pre>
+<pre><code>try {
+    const emailObj = autoValidateEmail(userData)
+} catch (ex) {
+    console.log(ex)
+}
+</code></pre>
+                <div class="container-output">
+                    <button id="onAutoGetEmailId">Validate Email Address</button>
+                    <div id="viewAutoGetEmailId"></div>
+                </div>
+            </li>
+        </ul>
 
         <div class="author">
             <h2>🚀 Author</h2>

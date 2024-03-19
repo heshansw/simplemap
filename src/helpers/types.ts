@@ -44,3 +44,7 @@ export type NestedKeyTypes<T> = {
           ? K | NestedKeyTypes<T[K]>
           : K
 }[keyof T & (string | number)]
+
+export type Email = string & { kind: 'email'; isValid: boolean }
+
+export type EmailBasic = `${string}@${string}.${string}`

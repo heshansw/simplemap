@@ -2,7 +2,7 @@
 
 [![MIT License](https://img.shields.io/badge/License-MIT-green.svg)](https://choosealicense.com/licenses/mit/)
 
-[![Version](https://img.shields.io/badge/Version-1.0.6-blue)](https://www.npmjs.com/package/simplemap-ts-utility)
+[![Version](https://img.shields.io/badge/Version-1.1.0-blue)](https://www.npmjs.com/package/simplemap-ts-utility)
 
 ## Introduction
 
@@ -252,7 +252,7 @@ These are the available Typescript object manipulation methods,
 
         So new object array will looks like below.
 
-        ```json
+        ```
         [
             { name: 'Student Name 1', dateOfBirth: new Date('1990-01-02'), age: 34 },
             { name: 'Student Name 2', dateOfBirth: new Date('1995-04-04'), age: 29 },
@@ -364,6 +364,106 @@ These are the available Typescript object manipulation methods,
         But, let's say you have duplicated key names inside nested object. Then, this method will only retieve the first finding value.
 
         **Note:** _this method will be improved with the next version_
+
+# Improvements
+
+## Email Validators (Available with v1.1.0)
+
+-   **validateEmail** Check given email address is valid..
+
+    -   **_Parameters_**
+
+        1. **email** Email Address (**EmailBasic** type which is coming with this package)
+
+        Assume we have this email:
+
+        ```
+        test@test.com
+        ```
+
+        You can use below mentod to validate this email address
+
+        ```typescript
+        const validateSingleEmail = validateEmail('test@test.com')
+        ```
+
+-   **EmailBasic** type
+    from this custom basic type, you can validate basic email on development
+
+-   **getEmail** Check given email address is valid.
+
+    -   **_Parameters_**
+
+        1. **email** Email Address (**EmailBasic** type which is coming with this package)
+
+        Assume we have this email:
+
+        ```
+        test@test.com
+        ```
+
+        You can use below mentod to validate this email address
+
+        ```typescript
+        const validateSingleEmail = validateEmail('test@test.com')
+        ```
+
+        if email is valid, email will be returned. otherwise error exception will get returned.
+
+-   **validateEmailObject** In Same way you can use this method which will return the entire object, if the email address is valid
+
+    -   **_Parameters_**
+
+        1. **obj** Original Object
+        2. **path** key path
+
+        You can use below mentod to validate object email
+
+        ```typescript
+        try {
+            return validateEmailObject(userData, 'contact.email')
+        } catch (ex) {
+            return ex
+        }
+        ```
+
+        if email is valid, email will be returned. otherwise error exception will get returned.
+
+-   **autoValidateEmail** Validate an object if the object contains key which contains word 'email'
+
+    -   **_Parameters_**
+
+        1. **obj** Original Object
+
+        Lets say you have an object which needs to be validated if the object has any key value with key contains word 'email'. Then you can use this method.
+
+        Lets say you have below mentioned object
+
+        ```typescript
+        const userDataError: User = {
+            name: 'heshan',
+            contact: {
+                email: 'test@#.c',
+                address: 'Malmö',
+            },
+        }
+        ```
+
+        So this object has an invalid email address. So this will return Error.
+
+        ```typescript
+        try {
+            return autoValidateEmail(userData)
+        } catch (ex) {
+            return ex
+        }
+        ```
+
+        if email is valid, email will be returned. otherwise error exception will get returned.
+
+        ```
+        Error: INVALID_EMAIL
+        ```
 
 ## 🚀 Author
 
