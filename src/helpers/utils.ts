@@ -12,7 +12,7 @@ import { SortOrder } from './enum'
 /**
  * Common Object Type
  */
-type CType = { [key: string]: {} | null | undefined }
+export type CType = { [key: string]: {} | null | undefined | object }
 
 const isKeyOfType = <T>(key: keyof T | CType): key is keyof T =>
     typeof key === 'string'

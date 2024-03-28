@@ -465,6 +465,60 @@ These are the available Typescript object manipulation methods,
         Error: INVALID_EMAIL
         ```
 
+## Form Value Mappers (Available with v1.2.0)
+
+-   **getFormData** Can map form data directly to object using this method. If form has an input type with email, this method will use our own **validateEmail** method and validate the email input value.
+
+    -   **_Parameters_**
+
+        1. **event** Submit Event
+
+        Need to pass form Submit event.
+
+        Lets say you have below mentioned form (Please note that this example uses React. But this feature can be used with any framework/library or with vanilla Typescript / Javascript).
+        But input name is **required**
+
+        ```html
+        <form id="formDataModel" onSubmit="{handleSubmit}">
+            <input placeholder="name" required name="name" type="text" />
+            <input placeholder="email" required name="email" type="email" />
+            <input placeholder="grade" name="grade" type="text" />
+            <button type="submit">Submit</button>
+        </form>
+        ```
+
+        So this object has an invalid email address. So this will return Error.
+
+        ```typescript
+        type EmailUser = {
+            name: string
+            email: EmailBasic
+        }
+
+        handleSubmit = (event: SubmitEvent) => {
+            try {
+                const formData = getFormData(event) as EmailUser
+            } catch (ex) {
+                console.error(ex)
+            }
+        }
+        ```
+
+        Please wrap this method with a try catch block. If there is an issue with form data validations, the event will go to catch block.
+        for an example below error will be triggered on invalid email address
+
+        ```
+        Error: INVALID_EMAIL
+        ```
+
+        For this example, when the form is submitted, formData will be like below,
+
+        ```json
+        { "name": "John", "email": "john@example.com", "grade": "A" }
+        ```
+
+        Further improvements on this method and form related improvements will be there will next versions.
+
 ## 🚀 Author
 
 -   [@heshansw](https://github.com/heshansw)

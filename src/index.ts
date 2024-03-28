@@ -9,6 +9,8 @@ import {
     getKeyVal,
 } from './helpers/utils'
 
+import { getFormData } from './form/form-util'
+
 import {
     getEmail,
     validateEmailObject,
@@ -35,4 +37,5 @@ export {
     validateEmailObject,
     autoValidateEmail,
     EmailBasic,
+    getFormData,
 }

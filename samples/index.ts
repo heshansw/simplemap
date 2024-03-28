@@ -16,6 +16,7 @@ import {
 } from '../src/helpers/validators/email'
 import { SortOrder } from '../src/helpers/enum'
 import { EmailBasic } from '../src/helpers/types'
+import { getFormData } from '../src/form/form-util'
 
 type Person = {
     name: string
@@ -327,4 +328,27 @@ const onAutoEmail = () => onView(viewAutoGetEmail, onAutoGetEmail())
 
 if (btnOnAutoGetEmail) {
     btnOnAutoGetEmail.addEventListener('click', onAutoEmail)
+}
+
+/**
+ * 12) Form Data Mapping
+ */
+
+type EmailUser = {
+    name: string
+    email: EmailBasic
+}
+
+const formMapping = document.getElementById('formDataModel')
+const formDataElement = document.getElementById('formDataElement')
+
+if (formMapping && formDataElement) {
+    formMapping.addEventListener('submit', (e: SubmitEvent) => {
+        try {
+            const formData = getFormData(e) as EmailUser
+            formDataElement.innerHTML = `<pre><code>${JSON.stringify(formData)}</code></pre>`
+        } catch (ex) {
+            formDataElement.innerHTML = `<pre><code>${ex}</code></pre>`
+        }
+    })
 }
