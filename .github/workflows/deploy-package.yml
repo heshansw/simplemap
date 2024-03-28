@@ -20,9 +20,13 @@ jobs:
               with:
                   node-version: ${{ matrix.node-version }}
 
-            - name: Install Dependencies and Build
+            - name: Install Dependencies and Run Unit Tests
               run: |
                   npm install
+                  npm test
+
+            - name: Build Project
+              run: |
                   npm run deploy
 
             - name: Deploy to GitHub Pages
