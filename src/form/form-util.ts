@@ -12,7 +12,6 @@ export const getFormData = (e: SubmitEvent): CType | null => {
         target
             .querySelectorAll<HTMLInputElement>('input[name]')
             .forEach((input) => {
-                console.log('input?.value', input?.name)
                 ;(input.type as string) === 'email' &&
                     validateEmail(input?.value as EmailBasic)
 
