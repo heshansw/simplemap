@@ -6,10 +6,16 @@ import {
     NumberValueKeys,
     ReturnCallbackO,
     NestedKeyTypes,
-    EmailBasic,
-    Email,
 } from './types'
 import { SortOrder } from './enum'
+
+/**
+ * Common Object Type
+ */
+type CType = { [key: string]: {} | null | undefined }
+
+const isKeyOfType = <T>(key: keyof T | CType): key is keyof T =>
+    typeof key === 'string'
 
 /**
  * Extract key values from an object and create a new object
@@ -18,12 +24,17 @@ import { SortOrder } from './enum'
  * @returns Partial Object with extracted key values
  */
 export const extract =
-    <T>(keys: Array<keyof T>) =>
-    (obj: T): Partial<T> =>
+    <T>(keys: Array<keyof T | CType>) =>
+    (obj: T | CType): Partial<T> =>
         Object.fromEntries(
             Object.entries(
                 keys.reduce(
-                    (ob, key) => ({ ...ob, [key]: obj[key] }),
+                    (ob, key) => ({
+                        ...(ob as object),
+                        [key as string]: isKeyOfType<T>(key)
+                            ? (obj as T)[key]
+                            : undefined,
+                    }),
                     {} as Partial<T>
                 )
             ).filter(([_, value]) => value !== undefined)
@@ -41,7 +52,8 @@ export const changeN =
     <T>(key: NumberValueKeys<T>, callback: CallbackN, newKey?: string) =>
     (obj: T): T | (T & Record<NumberValueKeys<T>, number>) | undefined => ({
         ...obj,
-        [newKey ?? key]: callback(obj[key] as number),
+        [newKey ?? key]:
+            typeof obj[key] === 'number' ? callback(obj[key] as number) : null,
     })
 
 /**
