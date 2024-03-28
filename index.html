@@ -246,20 +246,21 @@ const altStudentOne = changeO('age', calcAge)(studentOne);
                     and you have an Student object array which is coming from an
                     API like below
                 </p>
-                <pre><code>const studentArray: Array<Student> = [
+                <pre><code>const studentArray: Array&lt;Student&gt; = [
     { name: 'Student Name 1', age: 18, address: 'Malmö' },
     { name: 'Student Name 2', age: 17, address: 'Lund' },
     { name: 'Student Name 3', age: 16, address: 'Stockholm' },
     { name: 'Student Name 4', age: 18, address: 'Lund' }
 ]
 </code></pre>
-                <p>and now you need to have an object array which only contains name and age. Then you can use extractA method like below.</p>
-                <pre><code>
-const stdArrayNameAge: Array<Partial<Student>> = extractA(studentArray, ['name', 'age']);
-</code></pre>
                 <p>
-                    Then you can have new Array with information like below.
+                    and now you need to have an object array which only contains
+                    name and age. Then you can use extractA method like below.
                 </p>
+                <pre><code>
+const stdArrayNameAge: ArrayPartial&lt;Student&gt; = extractA(studentArray, ['name', 'age']);
+</code></pre>
+                <p>Then you can have new Array with information like below.</p>
                 <pre><code>
 [
     { name: 'Student Name 1', age: 18 },
@@ -269,41 +270,59 @@ const stdArrayNameAge: Array<Partial<Student>> = extractA(studentArray, ['name',
 ]
     </code></pre>
                 <div class="container-output">
-                    <button id="onExtractAId">Show extractA Method Output</button>
+                    <button id="onExtractAId">
+                        Show extractA Method Output
+                    </button>
                     <div id="viewExtractAId"></div>
                 </div>
             </li>
             <li>
-                <strong>changeA</strong> - This method is similar to <b>changeO</b> but this method can be used with Object Arrays. As same as earlier method, you can add new key value with calculation to an Object Array.
+                <strong>changeA</strong> - This method is similar to
+                <b>changeO</b> but this method can be used with Object Arrays.
+                As same as earlier method, you can add new key value with
+                calculation to an Object Array.
                 <ul>
                     <li><strong>Parameters</strong></li>
                     <li><code>array</code> Original object array.</li>
-                    <li><code>newKey</code> new key which will use to have calculated value.</li>
-                    <li><code>callback</code> callback method, which will be used for new value calculation.</li>
+                    <li>
+                        <code>newKey</code> new key which will use to have
+                        calculated value.
+                    </li>
+                    <li>
+                        <code>callback</code> callback method, which will be
+                        used for new value calculation.
+                    </li>
                 </ul>
-                <p>We can use the same scenario as <b>changeO</b>. Lets say you have below mentioned type:</p>
+                <p>
+                    We can use the same scenario as <b>changeO</b>. Lets say you
+                    have below mentioned type:
+                </p>
                 <pre><code>type Student {
     name: string,
     dateOfBirth: Date
 }
 </code></pre>
                 <p>
-                    and then you have below mentioned object array which is coming from an API.
+                    and then you have below mentioned object array which is
+                    coming from an API.
                 </p>
-                <pre><code>const studentArray: Array<Student> = [
+                <pre><code>const studentArray: Array&lt;Student&gt; = [
     { name: 'Student Name 1', dateOfBirth: new Date('1990-01-02') },
     { name: 'Student Name 2', dateOfBirth: new Date('1995-04-04') },
     { name: 'Student Name 3', dateOfBirth: new Date('1991-11-14') },
     { name: 'Student Name 4', dateOfBirth: new Date('1989-09-11') }
 ]
 </code></pre>
-                <p>So you need to append age calculation to this object array and you have same age calculation method as above. So you can use <b>changeA</b> method with this object array like below</p>
+                <p>
+                    So you need to append age calculation to this object array
+                    and you have same age calculation method as above. So you
+                    can use <b>changeA</b> method with this object array like
+                    below
+                </p>
                 <pre><code>
 const stWithAgeArray = changeA(studentArray, 'age', calcAge);
 </code></pre>
-                <p>
-                    So new object array will looks like below.
-                </p>
+                <p>So new object array will looks like below.</p>
                 <pre><code>
 [
     { name: 'Student Name 1', dateOfBirth: new Date('1990-01-02'), age: 34 },
@@ -318,20 +337,38 @@ const stWithAgeArray = changeA(studentArray, 'age', calcAge);
                 </div>
             </li>
             <li>
-                <strong>sort</strong> - This method can be used to sort an Array object based on key inside the object array using desc or asc way.
+                <strong>sort</strong> - This method can be used to sort an Array
+                object based on key inside the object array using desc or asc
+                way.
                 <ul>
                     <li><strong>Parameters</strong></li>
                     <li><code>array</code> Original object array.</li>
-                    <li><code>key</code> the key which used to sort the array.</li>
-                    <li><code>order</code> Sorting Order, You can use constant coming with library for ASC: <code>SortOrder.ASC</code>, DESC: <code>SortOrder.DESC</code>. This is an optional parameter. in default order will be arrange in ASC order.</li>
+                    <li>
+                        <code>key</code> the key which used to sort the array.
+                    </li>
+                    <li>
+                        <code>order</code> Sorting Order, You can use constant
+                        coming with library for ASC: <code>SortOrder.ASC</code>,
+                        DESC: <code>SortOrder.DESC</code>. This is an optional
+                        parameter. in default order will be arrange in ASC
+                        order.
+                    </li>
                 </ul>
-                <p>So lets say you have above used stWithAgeArray Array. and you need to sort object array by age in descending order. You can use sort method like below.</p>
+                <p>
+                    So lets say you have above used stWithAgeArray Array. and
+                    you need to sort object array by age in descending order.
+                    You can use sort method like below.
+                </p>
                 <pre><code>const descAgeStudents = sort(stWithAgeArray, 'age', SortOrder.DESC);
 </code></pre>
                 <p>
-                    and then you have below mentioned object array which is coming from an API.
+                    and then you have below mentioned object array which is
+                    coming from an API.
                 </p>
-                <p>So the order will be arranged age descending order like below.</p>
+                <p>
+                    So the order will be arranged age descending order like
+                    below.
+                </p>
                 <pre><code>[
     { name: 'Student Name 1', dateOfBirth: new Date('1990-01-02'), age: 34 },
     { name: 'Student Name 4', dateOfBirth: new Date('1989-09-11'), age: 34 },
@@ -345,11 +382,16 @@ const stWithAgeArray = changeA(studentArray, 'age', calcAge);
                 </div>
             </li>
             <li>
-                <strong>get</strong> - This method can be used to get value from an object by providing the key path.
+                <strong>get</strong> - This method can be used to get value from
+                an object by providing the key path.
                 <ul>
                     <li><strong>Parameters</strong></li>
                     <li><code>obj</code> Original Object.</li>
-                    <li><code>keyPath</code> Key path which will be used to retrieve value. when you call this method, your IDE will suggest available keypaths</li>
+                    <li>
+                        <code>keyPath</code> Key path which will be used to
+                        retrieve value. when you call this method, your IDE will
+                        suggest available keypaths
+                    </li>
                 </ul>
                 <p>So lets say you have below mentioned type of Object</p>
                 <pre><code>type Person = {
@@ -365,7 +407,8 @@ const stWithAgeArray = changeA(studentArray, 'age', calcAge);
 }
 </code></pre>
                 <p>
-                    And then lets say you need to retrieve city name of a person from below mentioned person information
+                    And then lets say you need to retrieve city name of a person
+                    from below mentioned person information
                 </p>
                 <pre><code>const person: Person = {
     name: 'Test Person 1',
@@ -379,29 +422,46 @@ const stWithAgeArray = changeA(studentArray, 'age', calcAge);
     }
 }
 </code></pre>
-<p>So now you need to get the city name. you can use the get method as mentioned below.</p>
-<pre><code>const personCity = get(person, 'location.city')</code></pre>
-<p>So then you can have city value as <code>Copanhagen</code></p>
+                <p>
+                    So now you need to get the city name. you can use the get
+                    method as mentioned below.
+                </p>
+                <pre><code>const personCity = get(person, 'location.city')</code></pre>
+                <p>
+                    So then you can have city value as <code>Copanhagen</code>
+                </p>
                 <div class="container-output">
                     <button id="onGetId">Show get Method Output</button>
                     <div id="viewGetId"></div>
                 </div>
             </li>
             <li>
-                <strong>getKeyVal</strong> - This method is kind of similar to get method. But here, by using this method, You can directly get value in an object by using key. Will use the same example as above Let say you need to get the zipCode value for above person using this method. You can use it as below.
+                <strong>getKeyVal</strong> - This method is kind of similar to
+                get method. But here, by using this method, You can directly get
+                value in an object by using key. Will use the same example as
+                above Let say you need to get the zipCode value for above person
+                using this method. You can use it as below.
                 <ul>
                     <li><strong>Parameters</strong></li>
                     <li><code>obj</code> Original Object.</li>
                     <li><code>key</code> key which needs to be retrieved</li>
                 </ul>
                 <p>
-                    And then lets say you need to retrieve city name of a person from below mentioned person information
+                    And then lets say you need to retrieve city name of a person
+                    from below mentioned person information
                 </p>
                 <pre><code>const personZipCode = getKeyVal(person, 'zipCode')
 </code></pre>
-<p>So then, you can directly get the value of zipcode which is <code>1050</code> But, let's say you have duplicated key names inside nested object. Then, this method will only retieve the first finding value.</p>
+                <p>
+                    So then, you can directly get the value of zipcode which is
+                    <code>1050</code> But, let's say you have duplicated key
+                    names inside nested object. Then, this method will only
+                    retieve the first finding value.
+                </p>
                 <div class="container-output">
-                    <button id="onGetKeyId">Show getKeyVal Method Output</button>
+                    <button id="onGetKeyId">
+                        Show getKeyVal Method Output
+                    </button>
                     <div id="viewGetKeyId"></div>
                 </div>
             </li>
@@ -409,34 +469,30 @@ const stWithAgeArray = changeA(studentArray, 'age', calcAge);
         <h2>Email Validators</h2>
         <ul>
             <li>
-                <strong>validateEmail</strong> - Check given email address is valid.
+                <strong>validateEmail</strong> - Check given email address is
+                valid.
                 <ul>
                     <li><strong>Parameters</strong></li>
-                    <li>
-                        <code>email</code> Email Address.
-                    </li>
+                    <li><code>email</code> Email Address.</li>
                 </ul>
                 <p>Assume we have this email:</p>
                 <pre><code>test@test.com
 </code></pre>
-<pre><code>const validateSingleEmail = validateEmail('test@test.com')
+                <pre><code>const validateSingleEmail = validateEmail('test@test.com')
 </code></pre>
                 <div class="container-output">
-                    <input id="valEmailId" type="text"/>
+                    <input id="valEmailId" type="text" />
                     <button id="onEmailId">Validate Email</button>
                     <div id="viewEmailId"></div>
                 </div>
             </li>
             <li>
-                <strong>getEmail</strong> - Get email from nested key path (if email address is valid)
+                <strong>getEmail</strong> - Get email from nested key path (if
+                email address is valid)
                 <ul>
                     <li><strong>Parameters</strong></li>
-                    <li>
-                        <code>obj</code> Original Object
-                    </li>
-                    <li>
-                        <code>path</code> key path
-                    </li>
+                    <li><code>obj</code> Original Object</li>
+                    <li><code>path</code> key path</li>
                 </ul>
                 <p>Assume we have this is the object:</p>
                 <pre><code>type User = {
@@ -447,8 +503,11 @@ const stWithAgeArray = changeA(studentArray, 'age', calcAge);
     }
 }
 </code></pre>
-<p><b>EmailBasic</b> is a type coming with this package which you can use</p>
-<pre><code>const userData: User = {
+                <p>
+                    <b>EmailBasic</b> is a type coming with this package which
+                    you can use
+                </p>
+                <pre><code>const userData: User = {
     name: 'heshan',
     contact: {
         email: 'test@test.com',
@@ -456,7 +515,7 @@ const stWithAgeArray = changeA(studentArray, 'age', calcAge);
     },
 }
 </code></pre>
-<pre><code>try {
+                <pre><code>try {
     const emailAddress = getEmail(userData, 'contact.email')
 } catch (ex) {
     console.log(ex)
@@ -468,15 +527,13 @@ const stWithAgeArray = changeA(studentArray, 'age', calcAge);
                 </div>
             </li>
             <li>
-                <strong>validateEmailObject</strong> - In Same way you can use this method which will return the entire object, if the email address is valid
+                <strong>validateEmailObject</strong> - In Same way you can use
+                this method which will return the entire object, if the email
+                address is valid
                 <ul>
                     <li><strong>Parameters</strong></li>
-                    <li>
-                        <code>obj</code> Original Object
-                    </li>
-                    <li>
-                        <code>path</code> key path
-                    </li>
+                    <li><code>obj</code> Original Object</li>
+                    <li><code>path</code> key path</li>
                 </ul>
                 <pre><code>
 try {
@@ -487,14 +544,16 @@ try {
                 </code></pre>
             </li>
             <li>
-                <strong>autoValidateEmail</strong> - Validate an object if the object contains key which contains word 'email'
+                <strong>autoValidateEmail</strong> - Validate an object if the
+                object contains key which contains word 'email'
                 <ul>
                     <li><strong>Parameters</strong></li>
-                    <li>
-                        <code>obj</code> Original Object
-                    </li>
+                    <li><code>obj</code> Original Object</li>
                 </ul>
-                <p>We can use the same object as above but this time we will put an invalid email</p>
+                <p>
+                    We can use the same object as above but this time we will
+                    put an invalid email
+                </p>
                 <pre><code>type User = {
     name: string
     contact: {
@@ -503,8 +562,11 @@ try {
     }
 }
 </code></pre>
-<p><b>EmailBasic</b> is a type coming with this package which you can use</p>
-<pre><code>const userData: User = {
+                <p>
+                    <b>EmailBasic</b> is a type coming with this package which
+                    you can use
+                </p>
+                <pre><code>const userData: User = {
     name: 'heshan',
     contact: {
         email: 'test@test',
@@ -512,16 +574,76 @@ try {
     },
 }
 </code></pre>
-<pre><code>try {
+                <pre><code>try {
     const emailObj = autoValidateEmail(userData)
 } catch (ex) {
     console.log(ex)
 }
 </code></pre>
                 <div class="container-output">
-                    <button id="onAutoGetEmailId">Validate Email Address</button>
+                    <button id="onAutoGetEmailId">
+                        Validate Email Address
+                    </button>
                     <div id="viewAutoGetEmailId"></div>
                 </div>
+            </li>
+        </ul>
+        <h2>Form Data Mapping</h2>
+        <ul>
+            <li>
+                <strong>getFormData</strong> - Can directly retieve form input
+                element data as an object
+                <ul>
+                    <li><strong>Parameters</strong></li>
+                    <li><code>event</code> Submit Event</li>
+                </ul>
+                <strong>Typescript Version</strong>
+                <pre><code>
+type EmailUser = {
+    name: string
+    email: EmailBasic
+}
+
+document.getElementById('formId').addEventListener('submit', (event: SubmitEvent) => {
+    try {
+        return getFormData(e) as EmailUser
+    } catch (ex) {
+        return ex  
+    }
+})
+                </code></pre>
+                <strong>React Version</strong>
+                <pre><code>
+&lt;form id='formId' onSubmit={handleSubmit}&gt;&lt;/form&gt;
+
+
+handleSubmit = (event) => {
+    try {
+        const formData = getFormData(event) as EmailUser
+    } catch (ex) {
+        console.error(ex);
+    }
+};
+                </code></pre>
+                <form id="formDataModel">
+                    <div class="container-output">
+                        <input
+                            placeholder="name"
+                            required
+                            name="name"
+                            type="text"
+                        />
+                        <input
+                            placeholder="email"
+                            required
+                            name="email"
+                            type="email"
+                        />
+                        <input placeholder="grade" name="grade" type="text" />
+                        <button type="submit">Submit</button>
+                    </div>
+                </form>
+                <div id="formDataElement"></div>
             </li>
         </ul>
 
