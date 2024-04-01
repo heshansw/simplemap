@@ -348,7 +348,7 @@ if (formMapping && formDataElement) {
             const formData = getFormData(e) as EmailUser
             formDataElement.innerHTML = `<pre><code>${JSON.stringify(formData)}</code></pre>`
         } catch (ex) {
-            formDataElement.innerHTML = `<pre><code>${ex}</code></pre>`
+            formDataElement.innerHTML = `<pre><code>${JSON.stringify(ex)}</code></pre>`
         }
     })
 }

@@ -1,4 +1,6 @@
+import { EMAIL_ERROR } from '../const'
 import { EmailBasic } from '../types'
+import { utilError } from '../utils'
 import {
     autoValidateEmail,
     getEmail,
@@ -37,7 +39,9 @@ describe('emailValidation', () => {
     })
     it('trigger exception if email is not valid', () => {
         const email: EmailBasic = 'john@#.c'
-        expect(() => validateEmail(email)).toThrow(new Error('INVALID_EMAIL'))
+        expect(() => validateEmail(email)).toThrow(
+            utilError(EMAIL_ERROR, email)
+        )
     })
 })
 
@@ -47,7 +51,7 @@ describe('validateEmailObject and getEmail', () => {
 
     it('trigger exception if email is not valid', () =>
         expect(() => getEmail(errorUser, 'contact.email')).toThrow(
-            new Error('INVALID_EMAIL')
+            utilError(EMAIL_ERROR, errorUser.contact.email)
         ))
 
     it('validate valid email return object', () =>
@@ -55,7 +59,7 @@ describe('validateEmailObject and getEmail', () => {
 
     it('trigger exception if email is not valid', () =>
         expect(() => validateEmailObject(errorUser, 'contact.email')).toThrow(
-            new Error('INVALID_EMAIL')
+            utilError(EMAIL_ERROR, errorUser.contact.email)
         ))
 })
 
@@ -64,6 +68,6 @@ describe('autoValidateEmail', () => {
         expect(autoValidateEmail(user)).toEqual(user))
     it('auto validate trigger exception if email is not valid', () =>
         expect(() => autoValidateEmail(errorUser)).toThrow(
-            new Error('INVALID_EMAIL')
+            utilError(EMAIL_ERROR, errorUser.contact.email)
         ))
 })
