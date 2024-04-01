@@ -11,7 +11,7 @@ typeScript **objects**, **arrays**, etc.
 
 ## Installation
 
-Install my-project with npm
+Install simplemap-ts-utility with npm
 
 ```bash
   npm i simplemap-ts-utility
