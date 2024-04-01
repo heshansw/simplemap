@@ -2,7 +2,7 @@
 
 [![MIT License](https://img.shields.io/badge/License-MIT-green.svg)](https://choosealicense.com/licenses/mit/)
 
-[![Version](https://img.shields.io/badge/Version-1.2.1-blue)](https://www.npmjs.com/package/simplemap-ts-utility)
+[![Version](https://img.shields.io/badge/Version-1.2.3-blue)](https://www.npmjs.com/package/simplemap-ts-utility)
 
 ## Introduction
 
