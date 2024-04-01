@@ -8,6 +8,7 @@ import {
     NestedKeyTypes,
 } from './types'
 import { SortOrder } from './enum'
+import { COMMON_ERROR } from './const'
 
 /**
  * Common Object Type
@@ -165,3 +166,15 @@ export const findContainKeys = <T extends Record<string, any>>(
               ? [obj[keyVal] as any]
               : []
     )
+
+export const utilError = (
+    errorMsg: COMMON_ERROR,
+    extra?: string,
+    message?: string
+) => {
+    const error = new Error()
+    error.name = errorMsg
+    error.message = message ?? extra ?? ''
+    error.stack = extra ?? ''
+    return error
+}

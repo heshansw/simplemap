@@ -625,6 +625,20 @@ handleSubmit = (event) => {
     }
 };
                 </code></pre>
+                <p><strong>Improvement with v1.2.1</strong></p>
+                <p>
+                    With minor version update, you can use new attribute called
+                    <b>decimal</b>. If an input field contains attribute
+                    <b>decimal</b>, form submission will validate input field
+                    and if input field contains non decimal value, form
+                    submission will trigger an error
+                </p>
+                <pre><code>
+&lt;input name='amount' decimal/&gt;
+                </code></pre>
+                <p>If there is an error with decimal, you can see error like</p>
+                <pre><code>{"name":"DECIMAL_ERROR","message":"amount"}</code></pre>
+                <p>Message will contain error input field name</p>
                 <form id="formDataModel">
                     <div class="container-output">
                         <input
@@ -640,6 +654,12 @@ handleSubmit = (event) => {
                             type="email"
                         />
                         <input placeholder="grade" name="grade" type="text" />
+                        <input
+                            placeholder="amount"
+                            name="amount"
+                            decimal
+                            type="text"
+                        />
                         <button type="submit">Submit</button>
                     </div>
                 </form>

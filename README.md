@@ -2,7 +2,7 @@
 
 [![MIT License](https://img.shields.io/badge/License-MIT-green.svg)](https://choosealicense.com/licenses/mit/)
 
-[![Version](https://img.shields.io/badge/Version-1.1.0-blue)](https://www.npmjs.com/package/simplemap-ts-utility)
+[![Version](https://img.shields.io/badge/Version-1.2.1-blue)](https://www.npmjs.com/package/simplemap-ts-utility)
 
 ## Introduction
 
@@ -516,6 +516,22 @@ These are the available Typescript object manipulation methods,
         ```json
         { "name": "John", "email": "john@example.com", "grade": "A" }
         ```
+
+        **_Improvement with v1.2.1_**
+
+        With minor version update, you can use new attribute called decimal. If an input field contains attribute **decimal**, form submission will validate input field and if input field contains non decimal value, form submission will trigger an error
+
+        ```html
+        <input name="amount" decimal />
+        ```
+
+        If there is an error with decimal, you can see error like
+
+        ```json
+        { "name": "DECIMAL_ERROR", "message": "amount" }
+        ```
+
+        Message will contain error input field name
 
         Further improvements on this method and form related improvements will be there will next versions.
 

@@ -1,6 +1,6 @@
 import { NestedKeyOptions, ValueTypeInPath, EmailBasic, Email } from '../types'
-import { getKeyValue, findContainKeys } from '../utils'
-import { EMAIL_REGEX } from '../const'
+import { getKeyValue, findContainKeys, utilError } from '../utils'
+import { EMAIL_ERROR, EMAIL_REGEX } from '../const'
 
 /**
  * Validate Email
@@ -11,7 +11,7 @@ export const validateEmail = (email: EmailBasic): Email =>
     EMAIL_REGEX.test(email)
         ? (email as Email)
         : (() => {
-              throw new Error('INVALID_EMAIL')
+              throw utilError(EMAIL_ERROR, email)
           })()
 
 /**
@@ -42,7 +42,7 @@ const validatorEmailRegObj = <T>(obj: T, email: EmailBasic) =>
     EMAIL_REGEX.test(email as EmailBasic)
         ? obj
         : (() => {
-              throw new Error('INVALID_EMAIL')
+              throw utilError(EMAIL_ERROR, email)
           })()
 
 /**
