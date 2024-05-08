@@ -666,6 +666,46 @@ handleSubmit = (event) => {
                 <div id="formDataElement"></div>
             </li>
         </ul>
+        <h2>Nested Object Array Re-Order</h2>
+        <ul>
+            <li>
+                <p>
+                    Lets say you want to reorder nested object array by
+                    providing from the nested key to be used for reorder
+                </p>
+                <p>Lets say you have this data set</p>
+                <pre><code>
+type InnerStudent = {
+    studentName: string
+    age: number
+}
+                    
+type Class = {
+    className: string
+    year: string
+    studentData: {
+        students: Array<InnerStudent>
+    }
+}
+                    
+type School = {
+    schoolName: string
+    address: string
+    classes: Array<Class>
+}
+                </code></pre>
+                <pre><code id="orgDataReOrder">
+</code></pre>
+                <p>
+                    You can get reordered result by using below method with
+                    nested key path to be reordered as the 2nd paramater
+                </p>
+                <pre><code id="orgDataReOrder">const reordered = reOrder(schoolData, 'classes.studentData.students.studentName')
+</code></pre>
+                <pre><code id="orgDataReOrderResult">
+</code></pre>
+            </li>
+        </ul>
 
         <div class="author">
             <h2>🚀 Author</h2>

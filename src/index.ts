@@ -9,6 +9,8 @@ import {
     getKeyVal,
 } from './helpers/utils'
 
+import { reOrder } from './helpers/order'
+
 import { getFormData } from './form/form-util'
 
 import {
@@ -38,4 +40,5 @@ export {
     autoValidateEmail,
     EmailBasic,
     getFormData,
+    reOrder,
 }

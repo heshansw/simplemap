@@ -178,3 +178,5 @@ export const utilError = (
     error.stack = extra ?? ''
     return error
 }
+
+export const isArray = Array.isArray
