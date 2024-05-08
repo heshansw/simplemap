@@ -2,7 +2,7 @@
 
 [![MIT License](https://img.shields.io/badge/License-MIT-green.svg)](https://choosealicense.com/licenses/mit/)
 
-[![Version](https://img.shields.io/badge/Version-1.2.3-blue)](https://www.npmjs.com/package/simplemap-ts-utility)
+[![Version](https://img.shields.io/badge/Version-1.3.0-blue)](https://www.npmjs.com/package/simplemap-ts-utility)
 
 ## Introduction
 
@@ -369,7 +369,7 @@ These are the available Typescript object manipulation methods,
 
 ## Email Validators (Available with v1.1.0)
 
--   **validateEmail** Check given email address is valid..
+-   **validateEmail** Check given email address is valid.
 
     -   **_Parameters_**
 
@@ -534,6 +534,153 @@ These are the available Typescript object manipulation methods,
         Message will contain error input field name
 
         Further improvements on this method and form related improvements will be there will next versions.
+
+## Reorder Nested Object Array (Available with v1.3.0)
+
+Now you can reorder nested object array on ASC or DESC order and return reordered object in same structure as the original object
+
+-   **reOrder** Reorder nested object array
+
+    -   **_Parameters_**
+
+        1. **originalObject** Original Object
+        2. **keyPath** Nested Key Path to be reordered
+        3. **SortOrder** Sorting Order (SortOrder.ASC for Ascending and SortOrder.DESC for descending)
+
+        Lets say you have this data set
+
+        ```json
+        {
+            "schoolName": "Doe School",
+            "address": "Stockholm",
+            "classes": [
+                {
+                    "className": "Class 01",
+                    "year": "Year 01",
+                    "studentData": {
+                        "students": [
+                            {
+                                "studentName": "Philip Larry",
+                                "age": 16
+                            },
+                            {
+                                "studentName": "John Doe",
+                                "age": 18
+                            },
+                            {
+                                "studentName": "Alex Numan",
+                                "age": 15
+                            },
+                            {
+                                "studentName": "Joe Max",
+                                "age": 20
+                            },
+                            {
+                                "studentName": "Remy Max",
+                                "age": 21
+                            }
+                        ]
+                    }
+                },
+                {
+                    "className": "Class 02",
+                    "year": "Year 01",
+                    "studentData": {
+                        "students": [
+                            {
+                                "studentName": "Bale Larry",
+                                "age": 16
+                            },
+                            {
+                                "studentName": "John Doe",
+                                "age": 18
+                            },
+                            {
+                                "studentName": "Andersson",
+                                "age": 15
+                            },
+                            {
+                                "studentName": "Joe Max",
+                                "age": 20
+                            }
+                        ]
+                    }
+                }
+            ]
+        }
+        ```
+
+        You can get reordered result by using below method with nested key path to be reordered as the 2nd paramater
+
+        ```typescript
+        const reordered = reOrder(
+            schoolData,
+            'classes.studentData.students.studentName'
+        )
+        ```
+
+        So studentName reordered object will look like below
+
+        ```json
+        {
+            "schoolName": "Doe School",
+            "address": "Stockholm",
+            "classes": [
+                {
+                    "className": "Class 01",
+                    "year": "Year 01",
+                    "studentData": {
+                        "students": [
+                            {
+                                "studentName": "Alex Numan",
+                                "age": 15
+                            },
+                            {
+                                "studentName": "Joe Max",
+                                "age": 20
+                            },
+                            {
+                                "studentName": "John Doe",
+                                "age": 18
+                            },
+                            {
+                                "studentName": "Philip Larry",
+                                "age": 16
+                            },
+                            {
+                                "studentName": "Remy Max",
+                                "age": 21
+                            }
+                        ]
+                    }
+                },
+                {
+                    "className": "Class 02",
+                    "year": "Year 01",
+                    "studentData": {
+                        "students": [
+                            {
+                                "studentName": "Andersson",
+                                "age": 15
+                            },
+                            {
+                                "studentName": "Bale Larry",
+                                "age": 16
+                            },
+                            {
+                                "studentName": "Joe Max",
+                                "age": 20
+                            },
+                            {
+                                "studentName": "John Doe",
+                                "age": 18
+                            }
+                        ]
+                    }
+                }
+            ]
+        }
+        ```
 
 ## 🚀 Author
 

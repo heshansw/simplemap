@@ -8,6 +8,9 @@ import {
     getKeyVal,
     sort,
 } from '../src/helpers/utils'
+
+import { reOrder } from '../src/helpers/order'
+
 import {
     getEmail,
     validateEmailObject,
@@ -15,7 +18,7 @@ import {
     validateEmail,
 } from '../src/helpers/validators/email'
 import { SortOrder } from '../src/helpers/enum'
-import { EmailBasic } from '../src/helpers/types'
+import { EmailBasic, NestedKeyOptionsWithArray } from '../src/helpers/types'
 import { getFormData } from '../src/form/form-util'
 
 type Person = {
@@ -351,4 +354,102 @@ if (formMapping && formDataElement) {
             formDataElement.innerHTML = `<pre><code>${JSON.stringify(ex)}</code></pre>`
         }
     })
+}
+
+/**
+ * 13) Object nested array order
+ */
+
+type InnerStudent = {
+    studentName: string
+    age: number
+}
+
+type Class = {
+    className: string
+    year: string
+    studentData: {
+        students: Array<InnerStudent>
+    }
+}
+
+type School = {
+    schoolName: string
+    address: string
+    classes: Array<Class>
+}
+
+const schoolData: School = {
+    schoolName: 'Doe School',
+    address: 'Stockholm',
+    classes: [
+        {
+            className: 'Class 01',
+            year: 'Year 01',
+            studentData: {
+                students: [
+                    {
+                        studentName: 'Philip Larry',
+                        age: 16,
+                    },
+                    {
+                        studentName: 'John Doe',
+                        age: 18,
+                    },
+                    {
+                        studentName: 'Alex Numan',
+                        age: 15,
+                    },
+                    {
+                        studentName: 'Joe Max',
+                        age: 20,
+                    },
+                    {
+                        studentName: 'Remy Max',
+                        age: 21,
+                    },
+                ],
+            },
+        },
+        {
+            className: 'Class 02',
+            year: 'Year 01',
+            studentData: {
+                students: [
+                    {
+                        studentName: 'Bale Larry',
+                        age: 16,
+                    },
+                    {
+                        studentName: 'John Doe',
+                        age: 18,
+                    },
+                    {
+                        studentName: 'Andersson',
+                        age: 15,
+                    },
+                    {
+                        studentName: 'Joe Max',
+                        age: 20,
+                    },
+                ],
+            },
+        },
+    ],
+}
+
+const orgDataReOrder = document.getElementById('orgDataReOrder')
+if (!!orgDataReOrder) {
+    orgDataReOrder.innerText = JSON.stringify(schoolData) as string
+}
+
+const reordered = reOrder(
+    schoolData,
+    'classes.studentData.students.studentName',
+    SortOrder.ASC
+)
+
+const orgDataReOrderResult = document.getElementById('orgDataReOrderResult')
+if (!!orgDataReOrderResult) {
+    orgDataReOrderResult.innerText = JSON.stringify(reordered) as string
 }
