@@ -20,6 +20,24 @@ Install simplemap-ts-utility with npm
 -   npm package: [https://www.npmjs.com/package/simplemap-ts-utility](https://www.npmjs.com/package/simplemap-ts-utility)
 -   Demo: [https://heshansw.github.io/simplemap/](https://heshansw.github.io/simplemap/)
 
+## Compatible Libraries and Frameworks
+
+This library is compatible with a range of TypeScript/JavaScript based libraries and frameworks, including:
+
+-   ![React](https://img.icons8.com/office/30/000000/react.png) ReactJS
+
+-   ![Angular](https://img.icons8.com/color/30/000000/angularjs.png) Angular
+
+-   ![Next.js](https://img.icons8.com/color/30/nextjs.png) NextJS
+
+-   ![NestJS](https://img.icons8.com/color/30/000000/nestjs.png) NestJS
+
+-   ![Vue.js](https://img.icons8.com/color/30/000000/vue-js.png) VueJS
+
+-   ![NodeJS](https://img.icons8.com/fluency/30/node-js.png) NodeJS
+
+-   ![TypeScript](https://img.icons8.com/color/30/000000/typescript.png) Typescript
+
 ## How to run locally
 
 -   First you need to download the code from github repository: [https://github.com/heshansw/simplemap](https://github.com/heshansw/simplemap)
